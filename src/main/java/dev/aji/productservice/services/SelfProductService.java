@@ -3,6 +3,8 @@ package dev.aji.productservice.services;
 import dev.aji.productservice.dtos.GenericProductDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("SelfProductService")
 public class SelfProductService implements ProductService
 {
@@ -19,6 +21,11 @@ public class SelfProductService implements ProductService
 
     @Override
     public GenericProductDto deleteProductById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<GenericProductDto> getAllProducts() {
         return null;
     }
 }

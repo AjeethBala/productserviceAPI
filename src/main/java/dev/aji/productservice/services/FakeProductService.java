@@ -9,11 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("FakeProductService")
 public class FakeProductService implements ProductService{
     RestTemplateBuilder restTemplateBuilder;
     String productURl="https://fakestoreapi.com/products/{id}";
-    String CreateProductUrl="https://fakestoreapi.com/products";
+    String requestProductUrl="https://fakestoreapi.com/products";
     @Autowired
     public  void FakeProductService(RestTemplateBuilder restTemplateBuilder){
         this.restTemplateBuilder=restTemplateBuilder;
@@ -37,7 +40,7 @@ public class FakeProductService implements ProductService{
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> response=restTemplate
                 .postForEntity(
-                        CreateProductUrl,
+                        requestProductUrl,
                         genericProductDto,
                         FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto=response.getBody();
@@ -57,6 +60,22 @@ public class FakeProductService implements ProductService{
         return genericProductDtos;
     }
 
+    @Override
+    public List<GenericProductDto> getAllProducts() {
+        RestTemplate restTemplate =restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto[]> response=restTemplate
+                .getForEntity(requestProductUrl, FakeStoreProductDto[].class);
+        FakeStoreProductDto[] fakeStoreProductDtos=response.getBody();
+
+        List<GenericProductDto> genericProductDtos=new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto: fakeStoreProductDtos ){
+            GenericProductDto genericProductDto=convertFakeStoreDtoToGenericDto(fakeStoreProductDto);
+            genericProductDtos.add(genericProductDto);
+
+        }
+
+        return genericProductDtos;
+    }
 
     public GenericProductDto convertFakeStoreDtoToGenericDto(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto=new GenericProductDto();
