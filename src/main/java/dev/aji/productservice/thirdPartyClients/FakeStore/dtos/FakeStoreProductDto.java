@@ -1,4 +1,4 @@
-package dev.aji.productservice.dtos;
+package dev.aji.productservice.thirdPartyClients.FakeStore.dtos;
 
 import dev.aji.productservice.models.Category;
 import lombok.Getter;
