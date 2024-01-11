@@ -18,16 +18,17 @@ import java.util.List;
 public class FakeStoreProductClient {
     RestTemplateBuilder restTemplateBuilder;
     String productURl="https://fakestoreapi.com/products/{id}";
-    String requestProductUrl="https://fakestoreapi.com/products";
+    String productRequestUrl="https://fakestoreapi.com/products";
+
     @Autowired
     public FakeStoreProductClient(RestTemplateBuilder restTemplateBuilder,
-                                  @Value("${fakestore.api.baseUrl}") String fakestorebaseUrl,
-                                  @Value("${fakestore.api.product}") String fakeStoreProduct){
+                                  @Value("${fakestore.api.baseurl}") String fakeStoreApiBaseUrl,
+                                  @Value("${fakestore.api.product}") String fakeStoreProductPath
+                                  ){
         this.restTemplateBuilder=restTemplateBuilder;
-        this.productURl=fakestorebaseUrl+fakeStoreProduct+"/{id}";
-        this.requestProductUrl=fakestorebaseUrl+fakeStoreProduct;
-        System.out.println(productURl);
-        System.out.println(requestProductUrl);
+        this.productURl = fakeStoreApiBaseUrl + fakeStoreProductPath + "/{id}";
+        this.productRequestUrl = fakeStoreApiBaseUrl + fakeStoreProductPath;
+
     }
 
 
@@ -50,7 +51,7 @@ public class FakeStoreProductClient {
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> response=restTemplate
                 .postForEntity(
-                        requestProductUrl,
+                        productRequestUrl,
                         genericProductDto,
                         FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto=response.getBody();
@@ -72,7 +73,7 @@ public class FakeStoreProductClient {
     public List<FakeStoreProductDto> getAllProducts() {
         RestTemplate restTemplate =restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto[]> response=restTemplate
-                .getForEntity(requestProductUrl, FakeStoreProductDto[].class);
+                .getForEntity(productRequestUrl, FakeStoreProductDto[].class);
         FakeStoreProductDto[] fakeStoreProductDtos=response.getBody();
 
 
