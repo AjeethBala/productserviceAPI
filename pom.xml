@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dev.aji</groupId>
-	<artifactId>productservice</artifactId>
+	<artifactId>FakeStore_ProductserviceAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>productservice</name>
 	<description>productservice</description>
